@@ -15,9 +15,14 @@ class MainApp(QtGui.QWidget) :
 
         self.show()
 
+    @staticmethod
+    def appObjects() :
+        app = QtGui.QApplication(sys.argv)
+        mainApp = MainApp()
+        return (app, mainApp)
+
 def main() :
-    app = QtGui.QApplication(sys.argv)
-    mainApp = MainApp()
+    (app, mainApp) = MainApp.appObjects()
     sys.exit(app.exec_())
 
 if __name__ == '__main__' :
