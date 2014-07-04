@@ -1,0 +1,4 @@
+[behave]
+tags=~@ignore
+show_skipped=false
+paths=behave/
