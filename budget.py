@@ -3,11 +3,22 @@
 import sys
 from PySide import QtGui
 
-app = QtGui.QApplication(sys.argv)
+class MainApp(QtGui.QWidget) :
+    def __init__(self) :
+        super(MainApp, self).__init__()
 
-wid = QtGui.QWidget()
-wid.resize(250, 150)
-wid.setWindowTitle('Simple')
-wid.show()
+        self.initUI()
 
-sys.exit(app.exec_())
+    def initUI(self) :
+        self.setGeometry(300, 300, 250, 150)
+        self.setWindowTitle('Budget')
+
+        self.show()
+
+def main() :
+    app = QtGui.QApplication(sys.argv)
+    mainApp = MainApp()
+    sys.exit(app.exec_())
+
+if __name__ == '__main__' :
+    main()
