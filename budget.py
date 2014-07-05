@@ -69,7 +69,7 @@ class DataModel(QtCore.QAbstractItemModel) :
       if not index.isValid() :
          return QtCore.Qt.NoItemFlags
 
-      return QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
+      return QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEditable
 
 class MainApp(QtGui.QTreeView) :
     def __init__(self) :
