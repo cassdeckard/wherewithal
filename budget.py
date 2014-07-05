@@ -3,7 +3,7 @@
 import sys
 from PySide import QtGui
 
-class MainApp(QtGui.QWidget) :
+class MainApp(QtGui.QTreeView) :
     def __init__(self) :
         super(MainApp, self).__init__()
 
