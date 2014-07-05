@@ -71,6 +71,15 @@ class DataModel(QtCore.QAbstractItemModel) :
 
       return QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEditable
 
+   def setData(self, index, value, role) :
+      if role != QtCore.Qt.EditRole :
+         print "setData: role is {}, not EditRole!".format(role)
+         return False
+
+      item = index.internalPointer()
+      item.data[index.column()] = value
+      return True
+
 class MainApp(QtGui.QTreeView) :
     def __init__(self) :
         super(MainApp, self).__init__()
