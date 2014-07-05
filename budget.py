@@ -22,11 +22,11 @@ class DataItem(object) :
 class DataModel(QtCore.QAbstractItemModel) :
    def __init__(self, parent=None) :
       super(DataModel, self).__init__(parent)
-      self.root = DataItem(["header1", "header2"])
-      self.root.addChild(["do", "a deer, a female deer"])
-      self.root.addChild(["re", "a drop of golden sun"])
-      self.root.addChild(["mi", "a name I call myself"])
-      self.root.addChild(["fa", "a long, long way to run"])
+      self.root = DataItem(["header1", "header2", "header3"])
+      self.root.addChild(["do", "a deer, a female deer", "1"])
+      self.root.addChild(["re", "a drop of golden sun", "2"])
+      self.root.addChild(["mi", "a name I call myself", "3"])
+      self.root.addChild(["fa", "a long, long way to run", "4"])
 
    def columnCount(self, parent) :
       if not self.root :
