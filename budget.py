@@ -6,6 +6,11 @@ from PySide import QtGui, QtCore
 class DataModel(QtCore.QAbstractItemModel) :
    def __init__(self, parent=None) :
       super(DataModel, self).__init__(parent)
+      self.model = [["do", "a deer, a female deer"],
+                    ["re", "a drop of golden sun"],
+                    ["mi", "a name I call myself"],
+                    ["fa", "a long, long way to run"],
+                   ]
 
    def columnCount(self, parent) :
       return 2
@@ -13,7 +18,7 @@ class DataModel(QtCore.QAbstractItemModel) :
    def rowCount(self, parent) :
       if parent.isValid() :
          return 0
-      return 3
+      return len(self.model)
 
    def data(self, index, role) :
       if not index.isValid() :
@@ -22,7 +27,7 @@ class DataModel(QtCore.QAbstractItemModel) :
       if role != QtCore.Qt.DisplayRole :
          return None
 
-      return "data @ ({}, {})".format(index.row(), index.column())
+      return self.model[index.row()][index.column()]
 
    def headerData(self, section, orientation, role) :
       if orientation == QtCore.Qt.Horizontal and role == QtCore.Qt.DisplayRole:
@@ -36,7 +41,7 @@ class DataModel(QtCore.QAbstractItemModel) :
          return QtCore.QModelIndex()
 
       if not parent.isValid() :
-         if column < 2 and row < 3 :
+         if column < self.columnCount(parent) and row < self.rowCount(parent) :
             return self.createIndex(row, column, "index @({}, {})".format(row, column))
 
    def parent(self, index) :
