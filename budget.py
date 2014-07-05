@@ -3,14 +3,30 @@
 import sys
 from PySide import QtGui, QtCore
 
+class DataItem(object) :
+   def __init__(self, data, parent=None) :
+      self.data = data
+      self.parent = parent
+      self.children = []
+
+   def addChild(self, childData) :
+      child = DataItem(childData, self)
+      self.children.append(child)
+
+   def numChildren(self) :
+      return len(self.children)
+
+   def child(self, row) :
+      return self.children[row]
+
 class DataModel(QtCore.QAbstractItemModel) :
    def __init__(self, parent=None) :
       super(DataModel, self).__init__(parent)
-      self.model = [["do", "a deer, a female deer"],
-                    ["re", "a drop of golden sun"],
-                    ["mi", "a name I call myself"],
-                    ["fa", "a long, long way to run"],
-                   ]
+      self.root = DataItem(("header1", "header2"))
+      self.root.addChild(("do", "a deer, a female deer"))
+      self.root.addChild(("re", "a drop of golden sun"))
+      self.root.addChild(("mi", "a name I call myself"))
+      self.root.addChild(("fa", "a long, long way to run"))
 
    def columnCount(self, parent) :
       return 2
@@ -18,7 +34,7 @@ class DataModel(QtCore.QAbstractItemModel) :
    def rowCount(self, parent) :
       if parent.isValid() :
          return 0
-      return len(self.model)
+      return self.root.numChildren()
 
    def data(self, index, role) :
       if not index.isValid() :
@@ -27,7 +43,8 @@ class DataModel(QtCore.QAbstractItemModel) :
       if role != QtCore.Qt.DisplayRole :
          return None
 
-      return self.model[index.row()][index.column()]
+      item = index.internalPointer()
+      return item.data[index.column()]
 
    def headerData(self, section, orientation, role) :
       if orientation == QtCore.Qt.Horizontal and role == QtCore.Qt.DisplayRole:
@@ -42,7 +59,7 @@ class DataModel(QtCore.QAbstractItemModel) :
 
       if not parent.isValid() :
          if column < self.columnCount(parent) and row < self.rowCount(parent) :
-            return self.createIndex(row, column, "index @({}, {})".format(row, column))
+            return self.createIndex(row, column, self.root.child(row))
 
    def parent(self, index) :
       if not index.isValid() :
