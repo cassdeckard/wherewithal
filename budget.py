@@ -22,7 +22,7 @@ class DataModel(QtCore.QAbstractItemModel) :
       if role != QtCore.Qt.DisplayRole :
          return None
 
-      return "data @ {}".format(index)
+      return "data @ ({}, {})".format(index.row(), index.column())
 
    def headerData(self, section, orientation, role) :
       if orientation == QtCore.Qt.Horizontal and role == QtCore.Qt.DisplayRole:
