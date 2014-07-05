@@ -44,6 +44,11 @@ class DataModel(QtCore.QAbstractItemModel) :
          return QtCore.QModelIndex()
       return QtCore.QModelIndex()
 
+   def flags(self, index) :
+      if not index.isValid() :
+         return QtCore.Qt.NoItemFlags
+
+      return QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable
 
 class MainApp(QtGui.QTreeView) :
     def __init__(self) :
