@@ -29,7 +29,12 @@ class DataModel(QtCore.QAbstractItemModel) :
       self.root.addChild(["fa", "a long, long way to run"])
 
    def columnCount(self, parent) :
-      return 2
+      if not self.root :
+         return 0
+      if not self.root.data :
+         return 0
+
+      return len(self.root.data)
 
    def rowCount(self, parent) :
       if parent.isValid() :
