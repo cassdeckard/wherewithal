@@ -25,7 +25,11 @@ class DataModel(QtCore.QAbstractItemModel) :
       return "data @ {}".format(index)
 
    def headerData(self, section, orientation, role) :
-      return ("col_1", "col_2")
+      if orientation == QtCore.Qt.Horizontal and role == QtCore.Qt.DisplayRole:
+         result = ("col_1", "col_2")[section]
+         return result
+
+      return None
 
    def index(self, row, column, parent) :
       if not self.hasIndex(row, column, parent) :
