@@ -25,8 +25,6 @@
 
 from PySide import QtCore, QtGui
 
-import simpletreemodel_rc
-
 
 class TreeItem(object):
     def __init__(self, data, parent=None):
@@ -70,10 +68,7 @@ class TreeModel(QtCore.QAbstractItemModel):
         self.setupModelData(data.split('\n'), self.rootItem)
 
     def columnCount(self, parent):
-        if parent.isValid():
-            return parent.internalPointer().columnCount()
-        else:
-            return self.rootItem.columnCount()
+        return 2
 
     def data(self, index, role):
         if not index.isValid():
@@ -94,7 +89,9 @@ class TreeModel(QtCore.QAbstractItemModel):
 
     def headerData(self, section, orientation, role):
         if orientation == QtCore.Qt.Horizontal and role == QtCore.Qt.DisplayRole:
-            return self.rootItem.data(section)
+            result = ("col_1", "col_2")[section]
+            print ("headerData({}, {}, {}) = {}").format(section, orientation, role, result)
+            return result
 
         return None
 
@@ -126,15 +123,7 @@ class TreeModel(QtCore.QAbstractItemModel):
         return self.createIndex(parentItem.row(), 0, parentItem)
 
     def rowCount(self, parent):
-        if parent.column() > 0:
-            return 0
-
-        if not parent.isValid():
-            parentItem = self.rootItem
-        else:
-            parentItem = parent.internalPointer()
-
-        return parentItem.childCount()
+        return 0
 
     def setupModelData(self, lines, parent):
         parents = [parent]
