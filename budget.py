@@ -59,10 +59,10 @@ class DataModel(QtCore.QAbstractItemModel) :
       if not self.hasIndex(row, column, parent) :
          return QtCore.QModelIndex()
 
-      if not parent.isValid() :
-         if (column < self.columnCount(parent)
-                 and row < self.rowCount(parent)) :
-            return self.createIndex(row, column, self.root.child(row))
+      parentItem = self.root
+      if (column < self.columnCount(parent)
+              and row < self.rowCount(parent)) :
+         return self.createIndex(row, column, parentItem.child(row))
 
    def parent(self, index) :
       if not index.isValid() :
