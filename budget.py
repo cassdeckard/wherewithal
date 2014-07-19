@@ -95,11 +95,12 @@ class MainApp(QtGui.QTreeView) :
         self.setGeometry(300, 300, 250, 150)
         self.setWindowTitle('Budget')
         self.setModel(DataModel())
-        self.model().root = DataItem(["header1", "header2", "header3"])
-        self.model().root.addChild(["do", "a deer, a female deer", "1"])
-        self.model().root.addChild(["re", "a drop of golden sun", "2"])
-        self.model().root.addChild(["mi", "a name I call myself", "3"])
-        self.model().root.addChild(["fa", "a long, long way to run", "4"])
+        root = DataItem(["header1", "header2", "header3"])
+        self.model().root = root
+        root.addChild(["do", "a deer, a female deer", "1"])
+        root.addChild(["re", "a drop of golden sun", "2"])
+        root.addChild(["mi", "a name I call myself", "3"])
+        root.addChild(["fa", "a long, long way to run", "4"])
 
         self.show()
 
