@@ -60,6 +60,8 @@ class DataModel(QtCore.QAbstractItemModel) :
          return QtCore.QModelIndex()
 
       parentItem = self.root
+      if parent.isValid() :
+         parentItem = parent.internalPointer()
       if (column < self.columnCount(parent)
               and row < self.rowCount(parent)) :
          return self.createIndex(row, column, parentItem.child(row))
