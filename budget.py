@@ -12,6 +12,7 @@ class DataItem(object) :
    def addChild(self, childData) :
       child = DataItem(childData, self)
       self.children.append(child)
+      return child
 
    def numChildren(self) :
       return len(self.children)
@@ -100,7 +101,8 @@ class MainApp(QtGui.QTreeView) :
         root.addChild(["do", "a deer, a female deer", "1"])
         root.addChild(["re", "a drop of golden sun", "2"])
         root.addChild(["mi", "a name I call myself", "3"])
-        root.addChild(["fa", "a long, long way to run", "4"])
+        c = root.addChild(["fa", "a long, long way to run", "4"])
+        c.addChild(["fafafafa", "test", "cinco"])
 
         self.show()
 
