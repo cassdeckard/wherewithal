@@ -52,7 +52,8 @@ class DataModel(QtCore.QAbstractItemModel) :
       return item.data[index.column()]
 
    def headerData(self, section, orientation, role) :
-      if orientation == QtCore.Qt.Horizontal and role == QtCore.Qt.DisplayRole:
+      if (orientation == QtCore.Qt.Horizontal
+              and role == QtCore.Qt.DisplayRole) :
          return self.root.data[section]
 
       return None
@@ -62,7 +63,8 @@ class DataModel(QtCore.QAbstractItemModel) :
          return QtCore.QModelIndex()
 
       if not parent.isValid() :
-         if column < self.columnCount(parent) and row < self.rowCount(parent) :
+         if (column < self.columnCount(parent)
+                 and row < self.rowCount(parent)) :
             return self.createIndex(row, column, self.root.child(row))
 
    def parent(self, index) :
@@ -74,7 +76,9 @@ class DataModel(QtCore.QAbstractItemModel) :
       if not index.isValid() :
          return QtCore.Qt.NoItemFlags
 
-      return QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEditable
+      return (QtCore.Qt.ItemIsEnabled
+              | QtCore.Qt.ItemIsSelectable
+              | QtCore.Qt.ItemIsEditable)
 
    def setData(self, index, value, role) :
       if role != QtCore.Qt.EditRole :
