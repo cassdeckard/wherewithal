@@ -35,7 +35,7 @@ class DataModel(QtCore.QAbstractItemModel) :
 
    def rowCount(self, parent) :
       if parent.isValid() :
-         return 0
+         return parent.internalPointer().numChildren()
       return self.root.numChildren()
 
    def data(self, index, role) :
