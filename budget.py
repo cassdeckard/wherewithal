@@ -20,6 +20,13 @@ class DataItem(object) :
    def child(self, row) :
       return self.children[row]
 
+   def __repr__(self) :
+      return "<%s object at %s, data: %s, %s children>" %(
+            self.__class__.__name__,
+            hex(id(self)),
+            self.data,
+            self.numChildren())
+
 class DataModel(QtCore.QAbstractItemModel) :
    def __init__(self, parent=None) :
       super(DataModel, self).__init__(parent)
