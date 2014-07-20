@@ -20,6 +20,11 @@ class DataItem(object) :
    def child(self, row) :
       return self.children[row]
 
+   def row(self) :
+      if self.parent :
+         return self.parent.children.index(self)
+      return 0
+
    def __repr__(self) :
       return "<%s object at %s, data: %s, %s children>" %(
             self.__class__.__name__,
@@ -76,7 +81,14 @@ class DataModel(QtCore.QAbstractItemModel) :
    def parent(self, index) :
       if not index.isValid() :
          return QtCore.QModelIndex()
-      return QtCore.QModelIndex()
+
+      childItem = index.internalPointer()
+      parentItem = childItem.parent
+
+      if parentItem == self.root :
+         return QtCore.QModelIndex()
+
+      return self.createIndex(parentItem.row(), 0, parentItem)
 
    def flags(self, index) :
       if not index.isValid() :
