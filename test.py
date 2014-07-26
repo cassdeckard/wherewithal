@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import Transaction
+
 import unittest
 
 class Test(unittest.TestCase) :
