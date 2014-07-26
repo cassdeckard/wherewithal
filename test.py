@@ -7,14 +7,13 @@ import unittest
 class TestTransaction(unittest.TestCase) :
 
     def setUp(self) :
-        pass
+        self.t = Transaction.Transaction()
 
     def tearDown(self) :
         pass
 
-    def test_init_Transaction(self) :
-        t = Transaction.Transaction()
-        self.assertIsNotNone(t)
+    def test_not_None(self) :
+        self.assertIsNotNone(self.t)
 
 if __name__ == '__main__' :
     unittest.main()
