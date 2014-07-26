@@ -15,5 +15,10 @@ class TestTransaction(unittest.TestCase) :
     def test_not_None(self) :
         self.assertIsNotNone(self.test_object)
 
+    def test_can_assign_data(self) :
+        self.test_object['foo'] = 'bar'
+        self.assertIn('foo', self.test_object)
+        self.assertEqual(self.test_object['foo'], 'bar')
+
 if __name__ == '__main__' :
     unittest.main()
