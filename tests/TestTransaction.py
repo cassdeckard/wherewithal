@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import Transaction
 
 import unittest
@@ -19,6 +17,3 @@ class TestTransaction(unittest.TestCase) :
         self.test_object['foo'] = 'bar'
         self.assertIn('foo', self.test_object)
         self.assertEqual(self.test_object['foo'], 'bar')
-
-if __name__ == '__main__' :
-    unittest.main()
