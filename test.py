@@ -12,8 +12,9 @@ class Test(unittest.TestCase) :
     def tearDown(self) :
         pass
 
-    def test_test(self) :
-        self.assertTrue(False)
+    def test_init_Transaction(self) :
+        t = Transaction.Transaction()
+        self.assertIsNotNone(t)
 
 if __name__ == '__main__' :
     unittest.main()
