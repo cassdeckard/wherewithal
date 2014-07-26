@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 from PySide import QtGui, QtCore
@@ -100,7 +100,7 @@ class DataModel(QtCore.QAbstractItemModel) :
 
    def setData(self, index, value, role) :
       if role != QtCore.Qt.EditRole :
-         print "setData: role is {}, not EditRole!".format(role)
+         print("setData: role is {}, not EditRole!".format(role))
          return False
 
       item = index.internalPointer()
