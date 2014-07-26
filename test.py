@@ -4,7 +4,7 @@ import Transaction
 
 import unittest
 
-class Test(unittest.TestCase) :
+class TestTransaction(unittest.TestCase) :
 
     def setUp(self) :
         pass
