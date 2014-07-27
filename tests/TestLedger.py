@@ -17,3 +17,4 @@ class TestLedger(unittest.TestCase) :
     def test_add_transaction(self) :
         transaction = Transaction()
         self.test_object.add_transaction(transaction)
+        self.assertIn(transaction, self.test_object)
