@@ -1,5 +1,6 @@
+from PySide import QtCore
 
-class DataModelAdapter(object) :
+class DataModelAdapter(QtCore.QAbstractItemModel) :
 
     def __init__(self, data) :
         pass
