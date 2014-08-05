@@ -5,7 +5,7 @@ class Ledger(object) :
         pass
 
     def add_transaction(self, transaction) :
-        self._list.append({})
+        self._list.append(transaction)
         pass
 
     def __delitem__(self, key) :
@@ -16,3 +16,8 @@ class Ledger(object) :
 
     def __setitem__(self, key) :
         self._list.__setitem__(key)
+
+    def __contains__(self, key) :
+        for k in self._list :
+            if k is key : return True
+        return False
