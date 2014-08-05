@@ -20,3 +20,6 @@ class TestDataModelAdapter(unittest.TestCase) :
 
     def test_after_init_parent_is_none(self) :
         self.assertIsNone(self.test_object.parent())
+
+    def test_data(self) :
+        self.test_object.data()
