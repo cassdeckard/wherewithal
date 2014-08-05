@@ -20,3 +20,6 @@ class TestDataModelAdapter(unittest.TestCase) :
 
     def test_after_init_parent_is_none(self) :
         self.assertIsNone(self.test_object.parent())
+
+    def test_columnCount_returns_0_with_empty_data(self) :
+        self.assertEqual(self.test_object.columnCount(None), 0)
