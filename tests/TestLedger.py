@@ -18,3 +18,9 @@ class TestLedger(unittest.TestCase) :
         transaction = Transaction()
         self.test_object.add_transaction(transaction)
         self.assertIn(transaction, self.test_object)
+
+    def test_different_transaction_is_not_in_ledger(self) :
+        transaction1 = Transaction()
+        transaction2 = Transaction()
+        self.test_object.add_transaction(transaction1)
+        self.assertNotIn(transaction2, self.test_object)
