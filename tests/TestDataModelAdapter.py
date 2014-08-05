@@ -17,3 +17,6 @@ class TestDataModelAdapter(unittest.TestCase) :
 
     def test_inherits_QAbstractItemModel(self) :
         self.assertIsInstance(self.test_object, QtCore.QAbstractItemModel)
+
+    def test_after_init_parent_is_none(self) :
+        self.assertIsNone(self.test_object.parent())
