@@ -22,3 +22,6 @@ class DataModelAdapter(QtCore.QAbstractItemModel) :
 
     def parent(self, index) :
         return QtCore.QModelIndex()
+
+    def data(self, index, role) :
+        pass

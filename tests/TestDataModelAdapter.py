@@ -50,3 +50,7 @@ class TestDataModelAdapter(unittest.TestCase) :
 
     def test_parent(self) :
         self.test_object.parent(QtCore.QModelIndex())
+
+    def test_data(self) :
+        self.test_object.data(QtCore.QModelIndex(),
+                              QtCore.Qt.DisplayRole)
