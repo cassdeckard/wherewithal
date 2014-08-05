@@ -2,6 +2,9 @@
 
 import sys
 from PySide import QtGui, QtCore
+from Ledger import Ledger
+from Transaction import Transaction
+from DataModelAdapter import DataModelAdapter
 
 class DataItem(object) :
    def __init__(self, data, parent=None) :
@@ -116,14 +119,23 @@ class MainApp(QtGui.QTreeView) :
     def initUI(self) :
         self.setGeometry(300, 300, 250, 150)
         self.setWindowTitle('Budget')
-        self.setModel(DataModel())
-        root = DataItem(["header1", "header2", "header3"])
-        self.model().root = root
-        root.addChild(["do", "a deer, a female deer", "1"])
-        root.addChild(["re", "a drop of golden sun", "2"])
-        root.addChild(["mi", "a name I call myself", "3"])
-        c = root.addChild(["fa", "a long, long way to run", "4"])
-        c.addChild(["fafafafa", "test", "cinco"])
+
+        ledger = Ledger()
+        t = Transaction()
+        t['header1'] = 'do'
+        t['header2'] = 'a deer'
+        t['header3'] = '1'
+        ledger.add_transaction(t)
+
+        self.setModel(DataModelAdapter(ledger))
+
+        # root = DataItem(["header1", "header2", "header3"])
+        # self.model().root = root
+        # root.addChild(["do", "a deer, a female deer", "1"])
+        # root.addChild(["re", "a drop of golden sun", "2"])
+        # root.addChild(["mi", "a name I call myself", "3"])
+        # c = root.addChild(["fa", "a long, long way to run", "4"])
+        # c.addChild(["fafafafa", "test", "cinco"])
 
         self.show()
 
