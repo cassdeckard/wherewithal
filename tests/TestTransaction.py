@@ -17,3 +17,22 @@ class TestTransaction(unittest.TestCase) :
         self.test_object['foo'] = 'bar'
         self.assertIn('foo', self.test_object)
         self.assertEqual(self.test_object['foo'], 'bar')
+
+    def test_different_transactions_are_not_each_other(self) :
+        emptyTransaction = Transaction.Transaction()
+        self.assertIsNot(self.test_object, emptyTransaction)
+
+    def test_different_transactions_with_same_data_are_equal(self) :
+        self.test_object['foo'] = 'bar'
+        newTransaction = Transaction.Transaction()
+        newTransaction['foo'] = 'bar'
+        self.assertEqual(self.test_object, newTransaction)
+
+    def test_transaction_is_itself(self) :
+        self.assertIs(self.test_object, self.test_object)
+
+    def test_different_transactions_with_same_data_are_equal(self) :
+        self.test_object['foo'] = 'bar'
+        newTransaction = Transaction.Transaction()
+        newTransaction['foo'] = 'baz'
+        self.assertNotEqual(self.test_object, newTransaction)
