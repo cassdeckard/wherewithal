@@ -1,0 +1,3 @@
+
+class DataModelAdapter(object) :
+    pass
