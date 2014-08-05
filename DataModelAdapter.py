@@ -1,3 +1,5 @@
 
 class DataModelAdapter(object) :
-    pass
+
+    def __init__(self, data) :
+        pass
