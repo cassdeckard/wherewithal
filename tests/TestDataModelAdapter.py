@@ -23,3 +23,6 @@ class TestDataModelAdapter(unittest.TestCase) :
 
     def test_columnCount_returns_0_with_empty_data(self) :
         self.assertEqual(self.test_object.columnCount(None), 0)
+
+    def test_rowCount_returns_0_with_empty_data(self) :
+        self.assertEqual(self.test_object.rowCount(None), 0)

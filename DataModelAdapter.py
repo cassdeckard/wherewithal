@@ -8,3 +8,6 @@ class DataModelAdapter(QtCore.QAbstractItemModel) :
 
     def columnCount(self, parent) :
         return 0
+
+    def rowCount(self, parent) :
+        return 0
