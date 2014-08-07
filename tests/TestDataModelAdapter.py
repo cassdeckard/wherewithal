@@ -6,7 +6,7 @@ import unittest
 class TestDataModelAdapter(unittest.TestCase) :
 
     def setUp(self) :
-        self.test_data = {}
+        self.test_data = []
         self.test_object = DataModelAdapter.DataModelAdapter(self.test_data)
 
     def tearDown(self) :
@@ -26,3 +26,7 @@ class TestDataModelAdapter(unittest.TestCase) :
 
     def test_rowCount_returns_0_with_empty_data(self) :
         self.assertEqual(self.test_object.rowCount(None), 0)
+
+    def test_columnCount_returns_number_of_unique_keys_in_dictionaries(self) :
+        self.test_data.append({'foo' : 'bar'})
+        self.assertEqual(self.test_object.columnCount(None), 1)
