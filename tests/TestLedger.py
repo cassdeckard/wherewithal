@@ -24,3 +24,10 @@ class TestLedger(unittest.TestCase) :
         transaction2 = Transaction()
         self.test_object.add_transaction(transaction1)
         self.assertNotIn(transaction2, self.test_object)
+
+    def test_len(self) :
+        self.assertEqual(len(self.test_object), 0)
+        self.test_object.add_transaction(Transaction())
+        self.assertEqual(len(self.test_object), 1)
+        self.test_object.add_transaction(Transaction())
+        self.assertEqual(len(self.test_object), 2)
