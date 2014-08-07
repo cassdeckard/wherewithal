@@ -30,3 +30,9 @@ class TestDataModelAdapter(unittest.TestCase) :
     def test_columnCount_returns_number_of_unique_keys_in_dictionaries(self) :
         self.test_data.append({'foo' : 'bar'})
         self.assertEqual(self.test_object.columnCount(None), 1)
+        self.test_data.append({'foo' : 'baz'})
+        self.assertEqual(self.test_object.columnCount(None), 1)
+        self.test_data.append({'name' : 'Larry',
+                               'foo'  : 'bar',
+                              })
+        self.assertEqual(self.test_object.columnCount(None), 2)
