@@ -46,3 +46,7 @@ class TestDataModelAdapter(unittest.TestCase) :
         self.assertEqual(self.test_object.rowCount(None), 2)
         self.test_data.append({'foo' : 'baz'})
         self.assertEqual(self.test_object.rowCount(None), 3)
+
+    def test_index_returns_QModelIndex(self) :
+        result = self.test_object.index(0, 0, QtCore.QModelIndex())
+        self.assertIsInstance(result, QtCore.QModelIndex)

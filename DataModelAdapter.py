@@ -16,3 +16,6 @@ class DataModelAdapter(QtCore.QAbstractItemModel) :
 
     def rowCount(self, parent) :
         return len(self._data)
+
+    def index(self, row, column, parent) :
+        return QtCore.QModelIndex()
