@@ -15,4 +15,4 @@ class DataModelAdapter(QtCore.QAbstractItemModel) :
         return len(all_keys)
 
     def rowCount(self, parent) :
-        return 0
+        return len(self._data)

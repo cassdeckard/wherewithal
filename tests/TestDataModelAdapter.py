@@ -36,3 +36,13 @@ class TestDataModelAdapter(unittest.TestCase) :
                                'foo'  : 'bar',
                               })
         self.assertEqual(self.test_object.columnCount(None), 2)
+
+    def test_rowCount_returns_length_of_data(self) :
+        self.test_data.append({'name' : 'Larry',
+                               'foo'  : 'bar',
+                              })
+        self.assertEqual(self.test_object.rowCount(None), 1)
+        self.test_data.append({});
+        self.assertEqual(self.test_object.rowCount(None), 2)
+        self.test_data.append({'foo' : 'baz'})
+        self.assertEqual(self.test_object.rowCount(None), 3)
