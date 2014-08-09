@@ -18,9 +18,6 @@ class TestDataModelAdapter(unittest.TestCase) :
     def test_inherits_QAbstractItemModel(self) :
         self.assertIsInstance(self.test_object, QtCore.QAbstractItemModel)
 
-    def test_after_init_parent_is_none(self) :
-        self.assertIsNone(self.test_object.parent())
-
     def test_columnCount_returns_0_with_empty_data(self) :
         self.assertEqual(self.test_object.columnCount(None), 0)
 
@@ -50,3 +47,6 @@ class TestDataModelAdapter(unittest.TestCase) :
     def test_index_returns_QModelIndex(self) :
         result = self.test_object.index(0, 0, QtCore.QModelIndex())
         self.assertIsInstance(result, QtCore.QModelIndex)
+
+    def test_parent(self) :
+        self.test_object.parent(QtCore.QModelIndex())

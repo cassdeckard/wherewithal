@@ -19,3 +19,6 @@ class DataModelAdapter(QtCore.QAbstractItemModel) :
 
     def index(self, row, column, parent) :
         return QtCore.QModelIndex()
+
+    def parent(self, index) :
+        return QtCore.QModelIndex()
