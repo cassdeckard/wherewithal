@@ -48,14 +48,13 @@ class DataModel(QtCore.QAbstractItemModel) :
    def __init__(self, parent=None) :
       super(DataModel, self).__init__(parent)
       self.root = None
+      self._headers = ()
+
+   def setHeaders(self, headers) :
+      self._headers = headers
 
    def columnCount(self, parent) :
-      if not self.root :
-         return 0
-      if not self.root.hasData() :
-         return 0
-
-      return self.root.numData()
+      return len(self._headers)
 
    def rowCount(self, parent) :
       if parent.isValid() :
@@ -75,7 +74,7 @@ class DataModel(QtCore.QAbstractItemModel) :
    def headerData(self, section, orientation, role) :
       if (orientation == QtCore.Qt.Horizontal
               and role == QtCore.Qt.DisplayRole) :
-         return self.root.getData(section)
+         return self._headers
 
       return None
 
