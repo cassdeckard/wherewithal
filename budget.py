@@ -5,7 +5,7 @@ from PySide import QtGui, QtCore
 
 class DataItem(object) :
    def __init__(self, data, parent=None) :
-      self.data = data
+      self._data = data
       self.parent = parent
       self.children = []
 
@@ -25,11 +25,23 @@ class DataItem(object) :
          return self.parent.children.index(self)
       return 0
 
+   def hasData(self) :
+      return self._data is not None
+
+   def numData(self) :
+      return len(self._data)
+
+   def getData(self, index) :
+      return self._data[index]
+
+   def setData(self, index, value) :
+      self._data[index] = value
+
    def __repr__(self) :
-      return "<%s object at %s, data: %s, %s children>" %(
+      return "<%s object at %s, _data: %s, %s children>" %(
             self.__class__.__name__,
             hex(id(self)),
-            self.data,
+            self._data,
             self.numChildren())
 
 class DataModel(QtCore.QAbstractItemModel) :
@@ -40,10 +52,10 @@ class DataModel(QtCore.QAbstractItemModel) :
    def columnCount(self, parent) :
       if not self.root :
          return 0
-      if not self.root.data :
+      if not self.root.hasData() :
          return 0
 
-      return len(self.root.data)
+      return self.root.numData()
 
    def rowCount(self, parent) :
       if parent.isValid() :
@@ -58,12 +70,12 @@ class DataModel(QtCore.QAbstractItemModel) :
          return None
 
       item = index.internalPointer()
-      return item.data[index.column()]
+      return item.getData(index.column())
 
    def headerData(self, section, orientation, role) :
       if (orientation == QtCore.Qt.Horizontal
               and role == QtCore.Qt.DisplayRole) :
-         return self.root.data[section]
+         return self.root.getData(section)
 
       return None
 
@@ -104,7 +116,7 @@ class DataModel(QtCore.QAbstractItemModel) :
          return False
 
       item = index.internalPointer()
-      item.data[index.column()] = value
+      item.setData(index.column(), value)
       return True
 
 class MainApp(QtGui.QTreeView) :
