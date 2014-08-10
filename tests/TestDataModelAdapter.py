@@ -5,7 +5,7 @@ import unittest
 class TestDataModelAdapter(unittest.TestCase) :
 
     def setUp(self) :
-        self.test_data = {}
+        self.test_data = []
         self.test_object = DataModelAdapter.DataModelAdapter(self.test_data)
 
     def tearDown(self) :
@@ -22,11 +22,13 @@ class TestDataModelAdapter(unittest.TestCase) :
         self.assertTrue(self.test_object.hasData())
 
     def test_numChildren_returns_length_of_data(self) :
-        self.test_data['foo'] = 1
+        self.test_data.append({'foo': 1})
         self.assertEqual(self.test_object.numChildren(), 1)
 
     def test_getData_returns_data_for_given_key(self) :
         key = 'bar'
         expected = 'hello'
-        self.test_data[key] = expected
+        self.test_data.append({key: expected})
         self.assertEqual(self.test_object.getData(key), expected)
+
+    #def test_child_returns
