@@ -21,8 +21,10 @@ class TestDataModelAdapter(unittest.TestCase) :
     def test_hasData_returns_True(self) :
         self.assertTrue(self.test_object.hasData())
 
-    def test_numChildren_returns_length_of_data(self) :
-        self.test_data['foo'] = 1
+    def test_numChildren_returns_length_of_children(self) :
+        self.assertEqual(self.test_object.numChildren(), 0)
+        child = DataModelAdapter.DataModelAdapter(None)
+        self.test_object.addChild(child)
         self.assertEqual(self.test_object.numChildren(), 1)
 
     def test_getData_returns_data_for_given_key(self) :
