@@ -10,7 +10,7 @@ class DataModelAdapter(object) :
         return len(self._children)
 
     def hasData(self) :
-        return True
+        return self._data is not None
 
     def getData(self, key) :
         return self._data[key]
