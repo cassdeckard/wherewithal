@@ -17,3 +17,6 @@ class TestDataModelAdapter(unittest.TestCase) :
     def test_numChildren_returns_0_when_data_is_empty(self) :
         result = self.test_object.numChildren()
         self.assertEqual(result, 0)
+
+    def test_hasData_returns_True(self) :
+        self.assertTrue(self.test_object.hasData())

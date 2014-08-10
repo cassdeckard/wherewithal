@@ -6,3 +6,6 @@ class DataModelAdapter(object) :
 
     def numChildren(self) :
         return 0
+
+    def hasData(self) :
+        return True
