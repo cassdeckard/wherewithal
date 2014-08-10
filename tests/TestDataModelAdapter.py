@@ -28,3 +28,9 @@ class TestDataModelAdapter(unittest.TestCase) :
     def test_numData_returns_length_of_data(self) :
         self.test_data['foo'] = 1
         self.assertEqual(self.test_object.numData(), 1)
+
+    def test_getData_returns_data_for_given_key(self) :
+        key = 'bar'
+        expected = 'hello'
+        self.test_data[key] = expected
+        self.assertEqual(self.test_object.getData(key), expected)

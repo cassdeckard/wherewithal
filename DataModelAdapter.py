@@ -13,3 +13,6 @@ class DataModelAdapter(object) :
 
     def numData(self) :
         return len(self._data)
+
+    def getData(self, key) :
+        return self._data[key]
