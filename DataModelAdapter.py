@@ -14,7 +14,9 @@ class DataModelAdapter(object) :
         return self._data is not None
 
     def getData(self, key) :
-        return self._data[key]
+        if key in self._data :
+            return self._data[key]
+        return None
 
     def addChild(self, child) :
         child.setParent(self)

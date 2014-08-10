@@ -31,6 +31,13 @@ class TestDataModelAdapter(unittest.TestCase) :
         self.test_object.addChild(child)
         self.assertEqual(self.test_object.numChildren(), 1)
 
+    def test_getData_returns_None_if_data_is_None(self) :
+        self.assertIsNone(self.test_object.getData('anything'))
+
+    def test_getData_returns_None_if_key_does_not_exist(self) :
+        self.test_data['key'] = 'value'
+        self.assertIsNone(self.test_object.getData('nonexistent_key'))
+
     def test_getData_returns_data_for_given_key(self) :
         key = 'bar'
         expected = 'hello'
