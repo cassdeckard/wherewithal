@@ -9,3 +9,6 @@ class DataModelAdapter(object) :
 
     def hasData(self) :
         return True
+
+    def numData(self) :
+        return 0
