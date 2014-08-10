@@ -13,3 +13,7 @@ class TestDataModelAdapter(unittest.TestCase) :
 
     def test_not_None(self) :
         self.assertIsNotNone(self.test_object)
+
+    def test_numChildren_returns_0_when_data_is_empty(self) :
+        result = self.test_object.numChildren()
+        self.assertEqual(result, 0)
