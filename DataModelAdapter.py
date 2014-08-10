@@ -17,6 +17,7 @@ class DataModelAdapter(object) :
         return self._data[key]
 
     def addChild(self, child) :
+        child.setParent(self)
         self._children.add(child)
 
     def setParent(self, parent) :
