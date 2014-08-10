@@ -24,3 +24,7 @@ class TestDataModelAdapter(unittest.TestCase) :
     def test_numData_returns_0_when_data_is_empty(self) :
         result = self.test_object.numData()
         self.assertEqual(result, 0)
+
+    def test_numData_returns_length_of_data(self) :
+        self.test_data['foo'] = 1
+        self.assertEqual(self.test_object.numData(), 1)

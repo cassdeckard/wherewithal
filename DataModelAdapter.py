@@ -2,6 +2,7 @@
 class DataModelAdapter(object) :
 
     def __init__(self, data) :
+        self._data = data
         pass
 
     def numChildren(self) :
@@ -11,4 +12,4 @@ class DataModelAdapter(object) :
         return True
 
     def numData(self) :
-        return 0
+        return len(self._data)
