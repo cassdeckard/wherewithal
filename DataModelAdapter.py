@@ -6,13 +6,10 @@ class DataModelAdapter(object) :
         pass
 
     def numChildren(self) :
-        return 0
+        return len(self._data)
 
     def hasData(self) :
         return True
-
-    def numData(self) :
-        return len(self._data)
 
     def getData(self, key) :
         return self._data[key]
