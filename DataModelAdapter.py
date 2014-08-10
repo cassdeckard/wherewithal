@@ -22,6 +22,10 @@ class DataModelAdapter(object) :
         child.setParent(self)
         self._children.add(child)
 
+    def child(self, row) :
+        children_list = [c for c in self._children]
+        return children_list[row]
+
     def setParent(self, parent) :
         self._parent = parent
 
