@@ -74,7 +74,7 @@ class DataModel(QtCore.QAbstractItemModel) :
    def headerData(self, section, orientation, role) :
       if (orientation == QtCore.Qt.Horizontal
               and role == QtCore.Qt.DisplayRole) :
-         return self._headers
+         return self._headers[section]
 
       return None
 
