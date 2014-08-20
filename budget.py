@@ -80,7 +80,7 @@ class DataModel(QtCore.QAbstractItemModel) :
          return False
 
       item = index.internalPointer()
-      item.setData(index.column(), value)
+      item.setData(self._headers[index.column()], value)
       return True
 
 class MainApp(QtGui.QTreeView) :
