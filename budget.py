@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
 import sys
+from datetime import date
 from PySide import QtGui, QtCore
+
 from Ledger import Ledger
 from Transaction import Transaction
 from DataModelAdapter import DataModelAdapter
@@ -32,7 +34,7 @@ class DataModel(QtCore.QAbstractItemModel) :
 
       item = index.internalPointer()
       key = self._headers[index.column()]
-      return item.getData(key)
+      return str(item.getData(key))
 
    def headerData(self, section, orientation, role) :
       if (orientation == QtCore.Qt.Horizontal
@@ -92,20 +94,22 @@ class MainApp(QtGui.QTreeView) :
         self.setWindowTitle('Budget')
 
         ledger = Ledger()
+
         t = Transaction()
-        t['header1'] = 'do'
-        t['header2'] = 'a deer'
-        #t['header3'] = '1'
+        t['Date'] = date(2014, 1, 2)
+        t['Amount'] = 2394
+        t['Payee'] = 'Schnucks'
         ledger.add_transaction(t)
+
         t = Transaction()
-        t['header1'] = 're'
-        #t['header2'] = 'a drop of golden sun'
-        t['header3'] = '2'
+        t['Date'] = date(2014, 1, 3)
+        t['Amount'] = 10000
+        t['Payee'] = 'Some guy'
         ledger.add_transaction(t)
 
         self.setModel(DataModel())
         self.model().root = DataModelAdapterMake(ledger)
-        self.model().setHeaders(('header1', 'header2', 'header3'))
+        self.model().setHeaders(('Date', 'Amount', 'Payee'))
 
         self.show()
 
