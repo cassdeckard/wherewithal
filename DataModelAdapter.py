@@ -27,7 +27,10 @@ class DataModelAdapter(object) :
 
     def child(self, row) :
         sort_key=lambda child : child.sort_key()
-        children_list = sorted(self._children, key=sort_key)
+        try:
+            children_list = sorted(self._children, key=sort_key)
+        except:
+            children_list = sorted(self._children, key=lambda child: str(child._data))
         return children_list[row]
 
     def setParent(self, parent) :

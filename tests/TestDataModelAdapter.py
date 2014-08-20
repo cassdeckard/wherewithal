@@ -11,6 +11,12 @@ def make_DataModelAdapter_with_sort_key(sort_key) :
     result = DataModelAdapter.DataModelAdapter(mockData)
     return result
 
+def make_DataModelAdapter_with_str(string) :
+    mockData = MagicMock()
+    mockData.__str__.return_value = string
+    result = DataModelAdapter.DataModelAdapter(mockData)
+    return result
+
 class TestDataModelAdapter(unittest.TestCase) :
 
     def setUp(self) :
@@ -75,6 +81,20 @@ class TestDataModelAdapter(unittest.TestCase) :
         self.test_object.addChild(data3)
         self.test_object.addChild(data1)
         self.test_object.addChild(data2)
+        self.assertEqual(self.test_object.child(0), data0)
+        self.assertEqual(self.test_object.child(1), data1)
+        self.assertEqual(self.test_object.child(2), data2)
+        self.assertEqual(self.test_object.child(3), data3)
+
+    def test_children_sorted_by_string_repr_if_sort_key_undefined(self) :
+        data0 = make_DataModelAdapter_with_str('a')
+        data1 = make_DataModelAdapter_with_str('b')
+        data2 = make_DataModelAdapter_with_str('bed')
+        data3 = make_DataModelAdapter_with_str('c')
+        self.test_object.addChild(data2)
+        self.test_object.addChild(data0)
+        self.test_object.addChild(data3)
+        self.test_object.addChild(data1)
         self.assertEqual(self.test_object.child(0), data0)
         self.assertEqual(self.test_object.child(1), data1)
         self.assertEqual(self.test_object.child(2), data2)
