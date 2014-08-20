@@ -46,6 +46,13 @@ class TestDataModelAdapter(unittest.TestCase) :
         self.test_data[key] = expected
         self.assertEqual(self.test_object.getData(key), expected)
 
+    def test_setData_sets_data(self) :
+        key = 'bar'
+        expected = 'hello'
+        self.test_data[key] = 'unexected'
+        self.test_object.setData(key, expected)
+        self.assertEqual(self.test_object.getData(key), expected)
+
     def test_addChild_sets_parent_of_child_to_self(self) :
         child = DataModelAdapter.DataModelAdapter(None)
         self.assertIsNone(child.parent())
