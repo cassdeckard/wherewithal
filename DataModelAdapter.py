@@ -26,7 +26,7 @@ class DataModelAdapter(object) :
         self._children.add(child)
 
     def child(self, row) :
-        sort_key=lambda child : child._data['Date']
+        sort_key=lambda child : child.sort_key()
         children_list = sorted(self._children, key=sort_key)
         return children_list[row]
 
@@ -35,3 +35,6 @@ class DataModelAdapter(object) :
 
     def parent(self) :
         return self._parent
+
+    def sort_key(self) :
+        return self._data.sort_key()

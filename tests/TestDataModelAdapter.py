@@ -3,6 +3,13 @@ import DataModelAdapter
 from datetime import date
 
 import unittest
+from unittest.mock import MagicMock
+
+def make_DataModelAdapter_with_sort_key(sort_key) :
+    mockData = MagicMock()
+    mockData.sort_key = MagicMock(return_value=sort_key)
+    result = DataModelAdapter.DataModelAdapter(mockData)
+    return result
 
 class TestDataModelAdapter(unittest.TestCase) :
 
@@ -59,23 +66,11 @@ class TestDataModelAdapter(unittest.TestCase) :
         self.test_object.addChild(child)
         self.assertIs(child.parent(), self.test_object)
 
-    def test_children_sorted_by_Date_by_default(self) :
-        data0 = DataModelAdapter.DataModelAdapter(
-                {'Date'   : date(2013,1,1),
-                 'Number' : 8,
-                 'Word'   : 'alpha'})
-        data1 = DataModelAdapter.DataModelAdapter(
-                {'Date'   : date(2014,1,2),
-                 'Number' : 6,
-                 'Word'   : 'Gamma'})
-        data2 = DataModelAdapter.DataModelAdapter(
-                {'Date'   : date(2014,1,3),
-                 'Number' : 5,
-                 'Word'   : 'Zeta'})
-        data3 = DataModelAdapter.DataModelAdapter(
-                {'Date'   : date(2014,2,1),
-                 'Number' : 7,
-                 'Word'   : 'Kappa'})
+    def test_children_sorted_by_sort_key(self) :
+        data0 = make_DataModelAdapter_with_sort_key(0)
+        data1 = make_DataModelAdapter_with_sort_key(1)
+        data2 = make_DataModelAdapter_with_sort_key(2)
+        data3 = make_DataModelAdapter_with_sort_key(3)
         self.test_object.addChild(data0)
         self.test_object.addChild(data3)
         self.test_object.addChild(data1)
