@@ -23,7 +23,8 @@ class DataModelAdapter(object) :
         self._children.add(child)
 
     def child(self, row) :
-        children_list = [c for c in self._children]
+        sort_key=lambda child : child._data['Date']
+        children_list = sorted(self._children, key=sort_key)
         return children_list[row]
 
     def setParent(self, parent) :
