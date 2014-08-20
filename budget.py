@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import sys
-from datetime import date
 from PySide import QtGui, QtCore
 
 from Ledger import Ledger
@@ -96,13 +95,13 @@ class MainApp(QtGui.QTreeView) :
         ledger = Ledger()
 
         t = Transaction()
-        t['Date'] = date(2014, 1, 2)
+        t['Date'] = 'today'
         t['Amount'] = 2394
         t['Payee'] = 'Schnucks'
         ledger.add_transaction(t)
 
         t = Transaction()
-        t['Date'] = date(2014, 1, 3)
+        t['Date'] = '11/5/1955'
         t['Amount'] = 10000
         t['Payee'] = 'Some guy'
         ledger.add_transaction(t)
