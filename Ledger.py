@@ -21,3 +21,6 @@ class Ledger(object) :
         for k in self._list :
             if k is key : return True
         return False
+
+    def __len__(self) :
+        return len(self._list)

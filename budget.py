@@ -2,60 +2,21 @@
 
 import sys
 from PySide import QtGui, QtCore
-
-class DataItem(object) :
-   def __init__(self, data, parent=None) :
-      self._data = data
-      self.parent = parent
-      self.children = []
-
-   def addChild(self, childData) :
-      child = DataItem(childData, self)
-      self.children.append(child)
-      return child
-
-   def numChildren(self) :
-      return len(self.children)
-
-   def child(self, row) :
-      return self.children[row]
-
-   def row(self) :
-      if self.parent :
-         return self.parent.children.index(self)
-      return 0
-
-   def hasData(self) :
-      return self._data is not None
-
-   def numData(self) :
-      return len(self._data)
-
-   def getData(self, index) :
-      return self._data[index]
-
-   def setData(self, index, value) :
-      self._data[index] = value
-
-   def __repr__(self) :
-      return "<%s object at %s, _data: %s, %s children>" %(
-            self.__class__.__name__,
-            hex(id(self)),
-            self._data,
-            self.numChildren())
+from Ledger import Ledger
+from Transaction import Transaction
+from DataModelAdapter import DataModelAdapter
 
 class DataModel(QtCore.QAbstractItemModel) :
    def __init__(self, parent=None) :
       super(DataModel, self).__init__(parent)
       self.root = None
+      self._headers = ()
+
+   def setHeaders(self, headers) :
+      self._headers = headers
 
    def columnCount(self, parent) :
-      if not self.root :
-         return 0
-      if not self.root.hasData() :
-         return 0
-
-      return self.root.numData()
+      return len(self._headers)
 
    def rowCount(self, parent) :
       if parent.isValid() :
@@ -70,12 +31,13 @@ class DataModel(QtCore.QAbstractItemModel) :
          return None
 
       item = index.internalPointer()
-      return item.getData(index.column())
+      key = self._headers[index.column()]
+      return item.getData(key)
 
    def headerData(self, section, orientation, role) :
       if (orientation == QtCore.Qt.Horizontal
               and role == QtCore.Qt.DisplayRole) :
-         return self.root.getData(section)
+         return self._headers[section]
 
       return None
 
@@ -95,7 +57,7 @@ class DataModel(QtCore.QAbstractItemModel) :
          return QtCore.QModelIndex()
 
       childItem = index.internalPointer()
-      parentItem = childItem.parent
+      parentItem = childItem.parent()
 
       if parentItem == self.root :
          return QtCore.QModelIndex()
@@ -128,16 +90,31 @@ class MainApp(QtGui.QTreeView) :
     def initUI(self) :
         self.setGeometry(300, 300, 250, 150)
         self.setWindowTitle('Budget')
+
+        ledger = Ledger()
+        t = Transaction()
+        t['header1'] = 'do'
+        t['header2'] = 'a deer'
+        #t['header3'] = '1'
+        ledger.add_transaction(t)
+        t = Transaction()
+        t['header1'] = 're'
+        #t['header2'] = 'a drop of golden sun'
+        t['header3'] = '2'
+        ledger.add_transaction(t)
+
         self.setModel(DataModel())
-        root = DataItem(["header1", "header2", "header3"])
-        self.model().root = root
-        root.addChild(["do", "a deer, a female deer", "1"])
-        root.addChild(["re", "a drop of golden sun", "2"])
-        root.addChild(["mi", "a name I call myself", "3"])
-        c = root.addChild(["fa", "a long, long way to run", "4"])
-        c.addChild(["fafafafa", "test", "cinco"])
+        self.model().root = DataModelAdapterMake(ledger)
+        self.model().setHeaders(('header1', 'header2', 'header3'))
 
         self.show()
+
+def DataModelAdapterMake(ledger) :
+    result = DataModelAdapter(None)
+    for transaction in ledger :
+        dma = DataModelAdapter(transaction)
+        result.addChild(dma)
+    return result
 
 def main() :
     app = QtGui.QApplication(sys.argv)
