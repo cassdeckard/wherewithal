@@ -42,3 +42,7 @@ class TestTransaction(unittest.TestCase) :
     def test_Date_is_always_a_date(self) :
         self.test_object['Date'] = "1955-11-05"
         self.assertEqual(self.test_object['Date'], date(1955, 11, 5))
+
+    def test_sort_key_returns_Date_field(self) :
+        self.test_object['Date'] = "1993-09-03"
+        self.assertEqual(self.test_object.sort_key(), date(1993, 9, 3))

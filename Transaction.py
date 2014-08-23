@@ -15,3 +15,6 @@ class Transaction(object) :
 
     def __contains__(self, key) :
         return self._dict.__contains__(key)
+
+    def sort_key(self) :
+        return self['Date']
