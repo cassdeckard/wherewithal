@@ -3,6 +3,7 @@ from magicdate import magicdate
 class Transaction(object) :
     def __init__(self) :
         self._dict = {}
+        self['Date'] = 'today'
 
     def __getitem__(self, key) :
         return self._dict.__getitem__(key)

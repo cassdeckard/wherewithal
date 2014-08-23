@@ -40,6 +40,10 @@ class TestTransaction(unittest.TestCase) :
         self.assertNotEqual(self.test_object, newTransaction)
 
     def test_Date_is_always_a_date(self) :
+        transaction = Transaction.Transaction()
+        self.assertIsInstance(transaction['Date'], date)
+
+    def test_Date_converts_string_to_date(self) :
         self.test_object['Date'] = "1955-11-05"
         self.assertEqual(self.test_object['Date'], date(1955, 11, 5))
 
