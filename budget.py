@@ -93,7 +93,7 @@ class MainApp(QWidget) :
         vbox.addWidget(BudgetTreeView())
 
         button = QPushButton("Push me")
-        QObject.connect(button, SIGNAL("clicked()"), self, SLOT("doPrint()"))
+        button.clicked.connect(self.doPrint)
         vbox.addWidget(button)
 
         self.setLayout(vbox)
