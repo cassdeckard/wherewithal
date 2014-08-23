@@ -29,12 +29,12 @@ class DataModel(QAbstractItemModel) :
         if not index.isValid() :
             return None
 
-        if role != Qt.DisplayRole :
-            return None
+        if role == Qt.DisplayRole or role == Qt.EditRole :
+            item = index.internalPointer()
+            key = self._headers[index.column()]
+            return str(item.getData(key))
 
-        item = index.internalPointer()
-        key = self._headers[index.column()]
-        return str(item.getData(key))
+        return None
 
     def headerData(self, section, orientation, role) :
         if (orientation == Qt.Horizontal
