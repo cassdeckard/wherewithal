@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 
 import sys
-from PySide import QtGui, QtCore
+from PySide.QtGui import *
+from PySide.QtCore import *
 
 from Ledger import Ledger
 from Transaction import Transaction
 from DataModelAdapter import DataModelAdapter
 
-SIGNAL = QtCore.SIGNAL
-
-class DataModel(QtCore.QAbstractItemModel) :
+class DataModel(QAbstractItemModel) :
    def __init__(self, parent=None) :
       super(DataModel, self).__init__(parent)
       self.root = None
@@ -30,7 +29,7 @@ class DataModel(QtCore.QAbstractItemModel) :
       if not index.isValid() :
          return None
 
-      if role != QtCore.Qt.DisplayRole :
+      if role != Qt.DisplayRole :
          return None
 
       item = index.internalPointer()
@@ -38,15 +37,15 @@ class DataModel(QtCore.QAbstractItemModel) :
       return str(item.getData(key))
 
    def headerData(self, section, orientation, role) :
-      if (orientation == QtCore.Qt.Horizontal
-              and role == QtCore.Qt.DisplayRole) :
+      if (orientation == Qt.Horizontal
+              and role == Qt.DisplayRole) :
          return self._headers[section]
 
       return None
 
    def index(self, row, column, parent) :
       if not self.hasIndex(row, column, parent) :
-         return QtCore.QModelIndex()
+         return QModelIndex()
 
       parentItem = self.root
       if parent.isValid() :
@@ -57,26 +56,26 @@ class DataModel(QtCore.QAbstractItemModel) :
 
    def parent(self, index) :
       if not index.isValid() :
-         return QtCore.QModelIndex()
+         return QModelIndex()
 
       childItem = index.internalPointer()
       parentItem = childItem.parent()
 
       if parentItem == self.root :
-         return QtCore.QModelIndex()
+         return QModelIndex()
 
       return self.createIndex(parentItem.row(), 0, parentItem)
 
    def flags(self, index) :
       if not index.isValid() :
-         return QtCore.Qt.NoItemFlags
+         return Qt.NoItemFlags
 
-      return (QtCore.Qt.ItemIsEnabled
-              | QtCore.Qt.ItemIsSelectable
-              | QtCore.Qt.ItemIsEditable)
+      return (Qt.ItemIsEnabled
+              | Qt.ItemIsSelectable
+              | Qt.ItemIsEditable)
 
    def setData(self, index, value, role) :
-      if role != QtCore.Qt.EditRole :
+      if role != Qt.EditRole :
          print("setData: role is {}, not EditRole!".format(role))
          return False
 
@@ -86,7 +85,7 @@ class DataModel(QtCore.QAbstractItemModel) :
       self.emit(SIGNAL("layoutChanged()"))
       return True
 
-class MainApp(QtGui.QTreeView) :
+class MainApp(QTreeView) :
     def __init__(self) :
         super(MainApp, self).__init__()
 
@@ -124,7 +123,7 @@ def DataModelAdapterMake(ledger) :
     return result
 
 def main() :
-    app = QtGui.QApplication(sys.argv)
+    app = QApplication(sys.argv)
     mainApp = MainApp()
     sys.exit(app.exec_())
 
