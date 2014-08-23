@@ -95,22 +95,8 @@ class MainApp(QTreeView) :
         self.setGeometry(300, 300, 250, 150)
         self.setWindowTitle('Budget')
 
-        ledger = Ledger()
-
-        t = Transaction()
-        t['Date'] = 'today'
-        t['Amount'] = 2394
-        t['Payee'] = 'Schnucks'
-        ledger.add_transaction(t)
-
-        t = Transaction()
-        t['Date'] = '11/5/1955'
-        t['Amount'] = 10000
-        t['Payee'] = 'Some guy'
-        ledger.add_transaction(t)
-
         self.setModel(DataModel())
-        self.model().root = DataModelAdapterMake(ledger)
+        self.model().root = getTestDataModel()
         self.model().setHeaders(('Date', 'Amount', 'Payee'))
 
         self.show()
@@ -121,6 +107,23 @@ def DataModelAdapterMake(ledger) :
         dma = DataModelAdapter(transaction)
         result.addChild(dma)
     return result
+
+def getTestDataModel() :
+    ledger = Ledger()
+
+    t = Transaction()
+    t['Date'] = 'today'
+    t['Amount'] = 2394
+    t['Payee'] = 'Schnucks'
+    ledger.add_transaction(t)
+
+    t = Transaction()
+    t['Date'] = '11/5/1955'
+    t['Amount'] = 10000
+    t['Payee'] = 'Some guy'
+    ledger.add_transaction(t)
+
+    return DataModelAdapterMake(ledger)
 
 def main() :
     app = QApplication(sys.argv)
