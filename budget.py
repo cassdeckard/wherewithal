@@ -9,81 +9,81 @@ from Transaction import Transaction
 from DataModelAdapter import DataModelAdapter
 
 class DataModel(QAbstractItemModel) :
-   def __init__(self, parent=None) :
-      super(DataModel, self).__init__(parent)
-      self.root = None
-      self._headers = ()
+    def __init__(self, parent=None) :
+        super(DataModel, self).__init__(parent)
+        self.root = None
+        self._headers = ()
 
-   def setHeaders(self, headers) :
-      self._headers = headers
+    def setHeaders(self, headers) :
+        self._headers = headers
 
-   def columnCount(self, parent) :
-      return len(self._headers)
+    def columnCount(self, parent) :
+        return len(self._headers)
 
-   def rowCount(self, parent) :
-      if parent.isValid() :
-         return parent.internalPointer().numChildren()
-      return self.root.numChildren()
+    def rowCount(self, parent) :
+        if parent.isValid() :
+            return parent.internalPointer().numChildren()
+        return self.root.numChildren()
 
-   def data(self, index, role) :
-      if not index.isValid() :
-         return None
+    def data(self, index, role) :
+        if not index.isValid() :
+            return None
 
-      if role != Qt.DisplayRole :
-         return None
+        if role != Qt.DisplayRole :
+            return None
 
-      item = index.internalPointer()
-      key = self._headers[index.column()]
-      return str(item.getData(key))
+        item = index.internalPointer()
+        key = self._headers[index.column()]
+        return str(item.getData(key))
 
-   def headerData(self, section, orientation, role) :
-      if (orientation == Qt.Horizontal
-              and role == Qt.DisplayRole) :
-         return self._headers[section]
+    def headerData(self, section, orientation, role) :
+        if (orientation == Qt.Horizontal
+                  and role == Qt.DisplayRole) :
+            return self._headers[section]
 
-      return None
+        return None
 
-   def index(self, row, column, parent) :
-      if not self.hasIndex(row, column, parent) :
-         return QModelIndex()
+    def index(self, row, column, parent) :
+        if not self.hasIndex(row, column, parent) :
+            return QModelIndex()
 
-      parentItem = self.root
-      if parent.isValid() :
-         parentItem = parent.internalPointer()
-      if (column < self.columnCount(parent)
-              and row < self.rowCount(parent)) :
-         return self.createIndex(row, column, parentItem.child(row))
+        parentItem = self.root
+        if parent.isValid() :
+            parentItem = parent.internalPointer()
+        if (column < self.columnCount(parent)
+                  and row < self.rowCount(parent)) :
+            return self.createIndex(row, column, parentItem.child(row))
 
-   def parent(self, index) :
-      if not index.isValid() :
-         return QModelIndex()
+    def parent(self, index) :
+        if not index.isValid() :
+            return QModelIndex()
 
-      childItem = index.internalPointer()
-      parentItem = childItem.parent()
+        childItem = index.internalPointer()
+        parentItem = childItem.parent()
 
-      if parentItem == self.root :
-         return QModelIndex()
+        if parentItem == self.root :
+            return QModelIndex()
 
-      return self.createIndex(parentItem.row(), 0, parentItem)
+        return self.createIndex(parentItem.row(), 0, parentItem)
 
-   def flags(self, index) :
-      if not index.isValid() :
-         return Qt.NoItemFlags
+    def flags(self, index) :
+        if not index.isValid() :
+            return Qt.NoItemFlags
 
-      return (Qt.ItemIsEnabled
-              | Qt.ItemIsSelectable
-              | Qt.ItemIsEditable)
+        return (Qt.ItemIsEnabled
+                  | Qt.ItemIsSelectable
+                  | Qt.ItemIsEditable)
 
-   def setData(self, index, value, role) :
-      if role != Qt.EditRole :
-         print("setData: role is {}, not EditRole!".format(role))
-         return False
+    def setData(self, index, value, role) :
+        if role != Qt.EditRole :
+            print("setData: role is {}, not EditRole!".format(role))
+            return False
 
-      item = index.internalPointer()
-      self.emit(SIGNAL("layoutAboutToBeChanged()"))
-      item.setData(self._headers[index.column()], value)
-      self.emit(SIGNAL("layoutChanged()"))
-      return True
+        item = index.internalPointer()
+        self.emit(SIGNAL("layoutAboutToBeChanged()"))
+        item.setData(self._headers[index.column()], value)
+        self.emit(SIGNAL("layoutChanged()"))
+        return True
 
 class MainApp(QWidget) :
     def __init__(self) :
