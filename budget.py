@@ -85,9 +85,26 @@ class DataModel(QAbstractItemModel) :
       self.emit(SIGNAL("layoutChanged()"))
       return True
 
-class MainApp(QTreeView) :
+class MainApp(QWidget) :
     def __init__(self) :
-        super(MainApp, self).__init__()
+        QWidget.__init__(self, parent=None)
+
+        vbox = QVBoxLayout()
+        vbox.addWidget(BudgetTreeView())
+
+        button = QPushButton("Push me")
+        QObject.connect(button, SIGNAL("clicked()"), self, SLOT("doPrint()"))
+        vbox.addWidget(button)
+
+        self.setLayout(vbox)
+
+    @Slot()
+    def doPrint(self) :
+        print("Button pushed")
+
+class BudgetTreeView(QTreeView) :
+    def __init__(self) :
+        super(BudgetTreeView, self).__init__()
 
         self.initUI()
 
@@ -99,7 +116,6 @@ class MainApp(QTreeView) :
         self.model().root = getTestDataModel()
         self.model().setHeaders(('Date', 'Amount', 'Payee'))
 
-        self.show()
 
 def DataModelAdapterMake(ledger) :
     result = DataModelAdapter(None)
@@ -128,6 +144,7 @@ def getTestDataModel() :
 def main() :
     app = QApplication(sys.argv)
     mainApp = MainApp()
+    mainApp.show()
     sys.exit(app.exec_())
 
 if __name__ == '__main__' :
