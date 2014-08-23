@@ -7,6 +7,8 @@ from Ledger import Ledger
 from Transaction import Transaction
 from DataModelAdapter import DataModelAdapter
 
+SIGNAL = QtCore.SIGNAL
+
 class DataModel(QtCore.QAbstractItemModel) :
    def __init__(self, parent=None) :
       super(DataModel, self).__init__(parent)
@@ -79,7 +81,9 @@ class DataModel(QtCore.QAbstractItemModel) :
          return False
 
       item = index.internalPointer()
+      self.emit(SIGNAL("layoutAboutToBeChanged()"))
       item.setData(self._headers[index.column()], value)
+      self.emit(SIGNAL("layoutChanged()"))
       return True
 
 class MainApp(QtGui.QTreeView) :
