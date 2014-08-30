@@ -17,6 +17,9 @@ class DataModel(QAbstractItemModel) :
     def setHeaders(self, headers) :
         self._headers = headers
 
+    def addHeader(self, header) :
+        self._headers.append(header)
+
     def columnCount(self, parent) :
         return len(self._headers)
 
@@ -103,6 +106,10 @@ class MainApp(QWidget) :
         button.clicked.connect(budget_tree_view.addTransaction)
         vbox.addWidget(button)
 
+        button = QPushButton("Add header")
+        button.clicked.connect(budget_tree_view.addHeader)
+        vbox.addWidget(button)
+
         self.setLayout(vbox)
 
 class BudgetTreeView(QTreeView) :
@@ -117,7 +124,14 @@ class BudgetTreeView(QTreeView) :
 
         self.setModel(DataModel())
         self.model().root = getTestDataModel()
-        self.model().setHeaders(('Date', 'Amount', 'Payee'))
+        self.model().setHeaders(['Date', 'Amount', 'Payee'])
+
+    @Slot()
+    def addHeader(self) :
+        text, ok = QInputDialog.getText(self, 'Add Header', 'Header name:')
+        if ok:
+            self.model().addHeader(text)
+            self.header().reset()
 
     @Slot()
     def addTransaction(self) :
