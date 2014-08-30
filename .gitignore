@@ -54,3 +54,6 @@ docs/_build/
 
 # vim stuff
 *.swp
+
+# wherewithal stuff
+*.pickle
