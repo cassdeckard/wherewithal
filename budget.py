@@ -104,6 +104,7 @@ class MainApp(QWidget) :
 
         vbox.addWidget(self.make_button('Add transaction', budget_tree_view.addTransaction))
         vbox.addWidget(self.make_button('Add header', budget_tree_view.addHeader))
+        vbox.addWidget(self.make_button('Save', budget_tree_view.save))
 
         self.setLayout(vbox)
 
@@ -136,6 +137,10 @@ class BudgetTreeView(QTreeView) :
     @Slot()
     def addTransaction(self) :
         self.model().addItem(Transaction())
+
+    @Slot()
+    def save(self) :
+        pass
 
 def DataModelAdapterMake(ledger) :
     result = DataModelAdapter(None)
