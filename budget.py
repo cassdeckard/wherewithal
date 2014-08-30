@@ -102,15 +102,15 @@ class MainApp(QWidget) :
         budget_tree_view = BudgetTreeView()
         vbox.addWidget(budget_tree_view)
 
-        button = QPushButton("Add transaction")
-        button.clicked.connect(budget_tree_view.addTransaction)
-        vbox.addWidget(button)
-
-        button = QPushButton("Add header")
-        button.clicked.connect(budget_tree_view.addHeader)
-        vbox.addWidget(button)
+        vbox.addWidget(self.make_button('Add transaction', budget_tree_view.addTransaction))
+        vbox.addWidget(self.make_button('Add header', budget_tree_view.addHeader))
 
         self.setLayout(vbox)
+
+    def make_button(self, title, slot) :
+        button = QPushButton(title)
+        button.clicked.connect(slot)
+        return button
 
 class BudgetTreeView(QTreeView) :
     def __init__(self) :
