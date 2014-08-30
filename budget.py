@@ -103,6 +103,10 @@ class MainApp(QWidget) :
         button.clicked.connect(budget_tree_view.addTransaction)
         vbox.addWidget(button)
 
+        button = QPushButton("Add header")
+        button.clicked.connect(budget_tree_view.addHeader)
+        vbox.addWidget(button)
+
         self.setLayout(vbox)
 
 class BudgetTreeView(QTreeView) :
@@ -118,6 +122,10 @@ class BudgetTreeView(QTreeView) :
         self.setModel(DataModel())
         self.model().root = getTestDataModel()
         self.model().setHeaders(('Date', 'Amount', 'Payee'))
+
+    @Slot()
+    def addHeader(self) :
+        pass
 
     @Slot()
     def addTransaction(self) :
