@@ -130,9 +130,15 @@ class BudgetTreeView(QTreeView) :
     def initUI(self) :
         self.setGeometry(300, 300, 250, 150)
         self.setWindowTitle('Budget')
-
         self.setModel(DataModel())
-        self.model().root = getTestDataModel()
+
+        try :
+            with open(DATA_FILE, 'rb') as infile :
+                self.model().root = pickle.load(infile)
+        except :
+            print("Load from '%s' failed, falling back to test data..." %DATA_FILE)
+            self.model().root = getTestDataModel()
+
         self.model().setHeaders(['Date', 'Amount', 'Payee'])
 
     @Slot()
