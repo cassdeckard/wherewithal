@@ -131,6 +131,7 @@ class BudgetTreeView(QTreeView) :
         text, ok = QInputDialog.getText(self, 'Add Header', 'Header name:')
         if ok:
             self.model().addHeader(text)
+            self.header().reset()
 
     @Slot()
     def addTransaction(self) :
