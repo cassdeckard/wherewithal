@@ -112,3 +112,11 @@ class TestDataModelAdapter(unittest.TestCase) :
         self.assertSetEqual(self.test_object.keys(), {"a", "b", "c", "foo", "bar"})
         self.test_object.addChild(make_test_object_with_keys("Larry", "foo", "Moe"))
         self.assertSetEqual(self.test_object.keys(), {"a", "b", "c", "foo", "bar", "Larry", "Moe"})
+
+    def test_keys_works_when_data_is_None(self) :
+        self.test_object._data = None
+        self.test_object.addChild(make_test_object_with_keys("a", "b", "c"))
+        self.test_object.addChild(make_test_object_with_keys("foo", "bar", "c"))
+        self.assertSetEqual(self.test_object.keys(), {"a", "b", "c", "foo", "bar"})
+        self.test_object.addChild(make_test_object_with_keys("Larry", "foo", "Moe"))
+        self.assertSetEqual(self.test_object.keys(), {"a", "b", "c", "foo", "bar", "Larry", "Moe"})
