@@ -8,11 +8,19 @@ from Ledger import Ledger
 from Transaction import Transaction
 from DataModelAdapter import DataModelAdapter
 
+import pickle
+
+DATA_FILE='wherewithal.pickle'
+
 class DataModel(QAbstractItemModel) :
     def __init__(self, parent=None) :
         super(DataModel, self).__init__(parent)
         self.root = None
         self._headers = ()
+
+    def save(self) :
+        with open(DATA_FILE, 'wb') as outfile:
+            pickle.dump(self.root, outfile, pickle.HIGHEST_PROTOCOL)
 
     def setHeaders(self, headers) :
         self._headers = headers
@@ -140,7 +148,7 @@ class BudgetTreeView(QTreeView) :
 
     @Slot()
     def save(self) :
-        pass
+        self.model().save()
 
 def DataModelAdapterMake(ledger) :
     result = DataModelAdapter(None)
