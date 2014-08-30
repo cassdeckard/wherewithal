@@ -121,7 +121,7 @@ class BudgetTreeView(QTreeView) :
 
         self.setModel(DataModel())
         self.model().root = getTestDataModel()
-        self.model().setHeaders(('Date', 'Amount', 'Payee'))
+        self.model().setHeaders(['Date', 'Amount', 'Payee'])
 
     @Slot()
     def addHeader(self) :
