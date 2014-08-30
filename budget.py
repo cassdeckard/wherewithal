@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 
-import sys
-from PySide.QtGui import *
-from PySide.QtCore import *
-
 from Ledger import Ledger
 from Transaction import Transaction
 from DataModelAdapter import DataModelAdapter
 
+from PySide.QtGui import *
+from PySide.QtCore import *
+
 import pickle
+import sys
 
 DATA_FILE='wherewithal.pickle'
 
