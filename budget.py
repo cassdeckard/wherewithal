@@ -1,18 +1,26 @@
 #!/usr/bin/env python3
 
-import sys
-from PySide.QtGui import *
-from PySide.QtCore import *
-
 from Ledger import Ledger
 from Transaction import Transaction
 from DataModelAdapter import DataModelAdapter
+
+from PySide.QtGui import *
+from PySide.QtCore import *
+
+import pickle
+import sys
+
+DATA_FILE='wherewithal.pickle'
 
 class DataModel(QAbstractItemModel) :
     def __init__(self, parent=None) :
         super(DataModel, self).__init__(parent)
         self.root = None
         self._headers = ()
+
+    def save(self) :
+        with open(DATA_FILE, 'wb') as outfile:
+            pickle.dump(self.root, outfile, pickle.HIGHEST_PROTOCOL)
 
     def setHeaders(self, headers) :
         self._headers = headers
@@ -102,15 +110,16 @@ class MainApp(QWidget) :
         budget_tree_view = BudgetTreeView()
         vbox.addWidget(budget_tree_view)
 
-        button = QPushButton("Add transaction")
-        button.clicked.connect(budget_tree_view.addTransaction)
-        vbox.addWidget(button)
-
-        button = QPushButton("Add header")
-        button.clicked.connect(budget_tree_view.addHeader)
-        vbox.addWidget(button)
+        vbox.addWidget(self.make_button('Add transaction', budget_tree_view.addTransaction))
+        vbox.addWidget(self.make_button('Add header', budget_tree_view.addHeader))
+        vbox.addWidget(self.make_button('Save', budget_tree_view.save))
 
         self.setLayout(vbox)
+
+    def make_button(self, title, slot) :
+        button = QPushButton(title)
+        button.clicked.connect(slot)
+        return button
 
 class BudgetTreeView(QTreeView) :
     def __init__(self) :
@@ -121,9 +130,15 @@ class BudgetTreeView(QTreeView) :
     def initUI(self) :
         self.setGeometry(300, 300, 250, 150)
         self.setWindowTitle('Budget')
-
         self.setModel(DataModel())
-        self.model().root = getTestDataModel()
+
+        try :
+            with open(DATA_FILE, 'rb') as infile :
+                self.model().root = pickle.load(infile)
+        except :
+            print("Load from '%s' failed, falling back to test data..." %DATA_FILE)
+            self.model().root = getTestDataModel()
+
         self.model().setHeaders(['Date', 'Amount', 'Payee'])
 
     @Slot()
@@ -136,6 +151,10 @@ class BudgetTreeView(QTreeView) :
     @Slot()
     def addTransaction(self) :
         self.model().addItem(Transaction())
+
+    @Slot()
+    def save(self) :
+        self.model().save()
 
 def DataModelAdapterMake(ledger) :
     result = DataModelAdapter(None)
