@@ -17,6 +17,9 @@ class DataModel(QAbstractItemModel) :
     def setHeaders(self, headers) :
         self._headers = headers
 
+    def addHeader(self, header) :
+        self._headers.append(header)
+
     def columnCount(self, parent) :
         return len(self._headers)
 
@@ -127,7 +130,7 @@ class BudgetTreeView(QTreeView) :
     def addHeader(self) :
         text, ok = QInputDialog.getText(self, 'Add Header', 'Header name:')
         if ok:
-            pass
+            self.model().addHeader(text)
 
     @Slot()
     def addTransaction(self) :
