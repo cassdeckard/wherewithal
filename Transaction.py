@@ -19,3 +19,6 @@ class Transaction(object) :
 
     def sort_key(self) :
         return self['Date']
+
+    def keys(self) :
+        return self._dict.keys()

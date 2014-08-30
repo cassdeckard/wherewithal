@@ -50,3 +50,10 @@ class TestTransaction(unittest.TestCase) :
     def test_sort_key_returns_Date_field(self) :
         self.test_object['Date'] = "1993-09-03"
         self.assertEqual(self.test_object.sort_key(), date(1993, 9, 3))
+
+    def test_keys_returns_keys(self) :
+        self.assertSetEqual(set(self.test_object.keys()), {'Date'})
+        self.test_object['monty'] = None
+        self.assertSetEqual(set(self.test_object.keys()), {'Date', 'monty'})
+        self.test_object['python'] = 1
+        self.assertSetEqual(set(self.test_object.keys()), {'Date', 'monty', 'python'})
