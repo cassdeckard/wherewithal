@@ -41,3 +41,7 @@ class DataModelAdapter(object) :
 
     def sort_key(self) :
         return self._data.sort_key()
+
+    def keys(self) :
+        all_sets = [set(child.keys()) for child in self._children]
+        return set.union(set(self._data.keys()), *all_sets)

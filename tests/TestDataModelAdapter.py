@@ -17,6 +17,12 @@ def make_DataModelAdapter_with_str(string) :
     result = DataModelAdapter.DataModelAdapter(mockData)
     return result
 
+def make_test_object_with_keys(*args) :
+    data = dict()
+    for arg in args :
+        data[arg] = None
+    return DataModelAdapter.DataModelAdapter(data)
+
 class TestDataModelAdapter(unittest.TestCase) :
 
     def setUp(self) :
@@ -99,3 +105,10 @@ class TestDataModelAdapter(unittest.TestCase) :
         self.assertEqual(self.test_object.child(1), data1)
         self.assertEqual(self.test_object.child(2), data2)
         self.assertEqual(self.test_object.child(3), data3)
+
+    def test_keys_returns_keys_of_all_children(self) :
+        self.test_object.addChild(make_test_object_with_keys("a", "b", "c"))
+        self.test_object.addChild(make_test_object_with_keys("foo", "bar", "c"))
+        self.assertSetEqual(self.test_object.keys(), {"a", "b", "c", "foo", "bar"})
+        self.test_object.addChild(make_test_object_with_keys("Larry", "foo", "Moe"))
+        self.assertSetEqual(self.test_object.keys(), {"a", "b", "c", "foo", "bar", "Larry", "Moe"})
