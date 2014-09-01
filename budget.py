@@ -149,8 +149,12 @@ class BudgetTreeView(QTreeView) :
 
     @Slot()
     def headerMenu(self, pos) :
-        print("headerMenu()")
         globalPos = self.mapToGlobal(pos)
+        print("headerMenu(%s) (%s)" %(pos, globalPos))
+
+        idx = self.header().logicalIndexAt(pos)
+        print("idx: %s" %idx)
+
         menu = QMenu()
         menu.addAction("test item")
         menu.addAction("test item 2")
