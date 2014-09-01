@@ -125,11 +125,10 @@ class BudgetTreeView(QTreeView) :
     def __init__(self) :
         super(BudgetTreeView, self).__init__()
 
+        self.init_model()
         self.initUI()
 
-    def initUI(self) :
-        self.setGeometry(300, 300, 250, 150)
-        self.setWindowTitle('Budget')
+    def init_model(self) :
         self.setModel(DataModel())
 
         try :
@@ -140,6 +139,10 @@ class BudgetTreeView(QTreeView) :
             self.model().root = getTestDataModel()
 
         self.model().setHeaders(['Date', 'Amount', 'Payee'])
+
+    def initUI(self) :
+        self.setGeometry(300, 300, 250, 150)
+        self.setWindowTitle('Budget')
 
     @Slot()
     def addHeader(self) :
