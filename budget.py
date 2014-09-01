@@ -156,11 +156,16 @@ class BudgetTreeView(QTreeView) :
         print("idx: %s" %idx)
 
         menu = QMenu()
-        menu.addAction("test item")
-        menu.addAction("test item 2")
+        test_action = menu.addAction("test action")
+        test_action.triggered.connect(self.testAction)
+
         selectedItem = menu.exec_(globalPos)
         if selectedItem:
             print("selected: ", selectedItem)
+
+    @Slot()
+    def testAction(self) :
+        print("testAction()")
 
     @Slot()
     def addHeader(self) :
