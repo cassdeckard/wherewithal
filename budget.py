@@ -144,6 +144,20 @@ class BudgetTreeView(QTreeView) :
         self.setGeometry(300, 300, 250, 150)
         self.setWindowTitle('Budget')
 
+        self.header().setContextMenuPolicy(Qt.CustomContextMenu)
+        self.header().customContextMenuRequested.connect(self.headerMenu)
+
+    @Slot()
+    def headerMenu(self, pos) :
+        print("headerMenu()")
+        globalPos = self.mapToGlobal(pos)
+        menu = QMenu()
+        menu.addAction("test item")
+        menu.addAction("test item 2")
+        selectedItem = menu.exec_(globalPos)
+        if selectedItem:
+            print("selected: ", selectedItem)
+
     @Slot()
     def addHeader(self) :
         text, ok = QInputDialog.getText(self, 'Add Header', 'Header name:')
