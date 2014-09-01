@@ -26,6 +26,5 @@ class Ledger(object) :
         return len(self._list)
 
     def keys(self) :
-        list_of_lists = [list(t.keys()) for t in self]
-        _list = [item for sublist in list_of_lists for item in sublist]
-        return set(_list)
+        all_sets = [set(t.keys()) for t in self]
+        return set.union(*all_sets)
