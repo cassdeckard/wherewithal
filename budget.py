@@ -138,7 +138,7 @@ class BudgetTreeView(QTreeView) :
             print("Load from '%s' failed, falling back to test data..." %DATA_FILE)
             self.model().root = getTestDataModel()
 
-        self.model().setHeaders(['Date', 'Amount', 'Payee'])
+        self.model().setHeaders(list(self.model().root.keys()))
 
     def initUI(self) :
         self.setGeometry(300, 300, 250, 150)
