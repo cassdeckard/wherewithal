@@ -1,5 +1,3 @@
-from DataModelAdapter import DataModelAdapter
-
 from PySide.QtGui import *
 from PySide.QtCore import *
 
@@ -90,5 +88,5 @@ class DataModel(QAbstractItemModel) :
     def addItem(self, item):
         numRows = self.root.numChildren()
         self.beginInsertRows(QModelIndex(), numRows, numRows)
-        self.root.addChild(DataModelAdapter(item))
+        self.root.addChild(item)
         self.endInsertRows()
