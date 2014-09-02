@@ -26,4 +26,3 @@ class BudgetTreeView(QTreeView) :
     def addTransaction(self) :
         new_data_model = DataModelAdapter(Transaction())
         self.model().addItem(new_data_model)
-
