@@ -7,10 +7,6 @@ class DataModel(QAbstractItemModel) :
         self.root = None
         self._headers = ()
 
-    def save(self) :
-        with open(DATA_FILE, 'wb') as outfile:
-            pickle.dump(self.root, outfile, pickle.HIGHEST_PROTOCOL)
-
     def setHeaders(self, headers) :
         self._headers = headers
 

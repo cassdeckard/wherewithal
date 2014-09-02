@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 from BudgetTreeView import BudgetTreeView
-from BudgetModelHelper import get_model
+from BudgetModelHelper import get_model, save_model
 
 from PySide.QtGui import *
 from PySide.QtCore import *
@@ -18,7 +18,7 @@ class MainApp(QWidget) :
 
         vbox.addWidget(self.make_button('Add transaction', budget_tree_view.addTransaction))
         vbox.addWidget(self.make_button('Add header', budget_tree_view.addHeader))
-        vbox.addWidget(self.make_button('Save', budget_tree_view.save))
+        vbox.addWidget(self.make_button('Save', lambda: save_model(budget_tree_view.model())))
 
         self.setLayout(vbox)
 

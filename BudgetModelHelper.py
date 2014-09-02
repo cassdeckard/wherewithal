@@ -43,3 +43,7 @@ def get_model() :
 
     model.setHeaders(list(model.root.keys()))
     return model
+
+def save_model(model) :
+    with open(DATA_FILE, 'wb') as outfile:
+        pickle.dump(model.root, outfile, pickle.HIGHEST_PROTOCOL)
