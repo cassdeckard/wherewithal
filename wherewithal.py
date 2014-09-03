@@ -29,6 +29,7 @@ class MainApp(QWidget) :
         button.clicked.connect(slot)
         return button
 
+
 def main() :
     app = QApplication(sys.argv)
     mainApp = MainApp()
