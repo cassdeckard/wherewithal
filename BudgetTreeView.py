@@ -12,7 +12,6 @@ class BudgetTreeView(QTreeView) :
         self.initUI()
 
     def initUI(self) :
-        self.setGeometry(300, 300, 250, 150)
         self.setWindowTitle('Budget')
 
     @Slot()
