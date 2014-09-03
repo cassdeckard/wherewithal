@@ -12,7 +12,12 @@ def get_ledger() :
         with open(DATA_FILE, 'rb') as infile:
             result = pickle.load(infile)
     except FileNotFoundError:
-        result = Ledger()
+        pass
+    except EOFError:
+        pass
+
+    if not result: result = Ledger()
+    return result
 
 def get_model() :
     model = DataModel()
