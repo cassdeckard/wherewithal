@@ -15,6 +15,8 @@ def get_ledger() :
         pass
     except EOFError:
         pass
+    except pickle.UnpicklingError:
+        pass
 
     if not result: result = Ledger()
     return result
