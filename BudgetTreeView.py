@@ -12,7 +12,6 @@ class BudgetTreeView(QTreeView) :
         self.initUI()
 
     def initUI(self) :
-        self.setGeometry(300, 300, 250, 150)
         self.setWindowTitle('Budget')
 
     @Slot()
@@ -26,4 +25,3 @@ class BudgetTreeView(QTreeView) :
     def addTransaction(self) :
         new_data_model = DataModelAdapter(Transaction())
         self.model().addItem(new_data_model)
-

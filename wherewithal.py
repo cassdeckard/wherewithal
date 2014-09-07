@@ -21,6 +21,7 @@ class MainApp(QWidget) :
         vbox.addWidget(self.make_button('Save', lambda: save_model(budget_tree_view.model())))
 
         self.setLayout(vbox)
+        self.setGeometry(100, 100, 800, 600)
 
     def make_button(self, title, slot) :
         button = QPushButton(title)
