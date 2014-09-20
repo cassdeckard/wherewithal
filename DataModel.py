@@ -7,11 +7,7 @@ class DataModel(QAbstractItemModel) :
         self.root = None
         self._headers = ()
 
-    def setHeaders(self, headers) :
-        self._headers = headers
-
-    def addHeader(self, header) :
-        self._headers.append(header)
+    # QAbstractItemModel methods
 
     def columnCount(self, parent) :
         return len(self._headers)
@@ -80,6 +76,14 @@ class DataModel(QAbstractItemModel) :
         item.setData(self._headers[index.column()], value)
         self.emit(SIGNAL("layoutChanged()"))
         return True
+
+    # Public methods
+
+    def setHeaders(self, headers) :
+        self._headers = headers
+
+    def addHeader(self, header) :
+        self._headers.append(header)
 
     def addItem(self, item):
         numRows = self.root.numChildren()
