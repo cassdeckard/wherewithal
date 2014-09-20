@@ -14,7 +14,7 @@ class MainApp(QWidget) :
         self.ledger = get_ledger()
 
         vbox = QVBoxLayout()
-        budget_tree_view = BudgetTreeView()
+        budget_tree_view = BudgetTreeView(self.ledger)
         vbox.addWidget(budget_tree_view)
 
         vbox.addWidget(self.make_button('Add transaction', budget_tree_view.addTransaction))

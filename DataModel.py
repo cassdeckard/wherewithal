@@ -1,11 +1,13 @@
 from PySide.QtGui import *
 from PySide.QtCore import *
 
+from Ledger import Ledger
+
 class DataModel(QAbstractItemModel) :
-    def __init__(self, parent=None) :
+    def __init__(self, ledger, parent=None) :
         super(DataModel, self).__init__(parent)
-        self.root = None
-        self._headers = ()
+        self._ledger = ledger
+        self._headers = []
 
     # QAbstractItemModel methods
 
@@ -14,17 +16,21 @@ class DataModel(QAbstractItemModel) :
 
     def rowCount(self, parent) :
         if parent.isValid() :
-            return parent.internalPointer().numChildren()
-        return self.root.numChildren()
+            return 0
+            # TODO: support subtrees
+        return len(self._ledger)
 
     def data(self, index, role) :
         if not index.isValid() :
             return None
 
+        transaction = self._ledger[index.row()]
+        # TODO: support subtrees
+
         if role == Qt.DisplayRole or role == Qt.EditRole :
-            item = index.internalPointer()
             key = self._headers[index.column()]
-            return str(item.getData(key))
+            data = transaction[key] if key in transaction else None
+            return str(data)
 
         return None
 
@@ -39,24 +45,15 @@ class DataModel(QAbstractItemModel) :
         if not self.hasIndex(row, column, parent) :
             return QModelIndex()
 
-        parentItem = self.root
-        if parent.isValid() :
-            parentItem = parent.internalPointer()
-        if (column < self.columnCount(parent)
-                  and row < self.rowCount(parent)) :
-            return self.createIndex(row, column, parentItem.child(row))
+        # TODO: support subtrees
+        return self.createIndex(row, column, QModelIndex())
 
     def parent(self, index) :
         if not index.isValid() :
             return QModelIndex()
 
-        childItem = index.internalPointer()
-        parentItem = childItem.parent()
-
-        if parentItem == self.root :
-            return QModelIndex()
-
-        return self.createIndex(parentItem.row(), 0, parentItem)
+        # TODO: support subtrees
+        return QModelIndex()
 
     def flags(self, index) :
         if not index.isValid() :
@@ -71,9 +68,12 @@ class DataModel(QAbstractItemModel) :
             print("setData: role is {}, not EditRole!".format(role))
             return False
 
-        item = index.internalPointer()
+        transaction = self._ledger[index.row()]
+        # TODO: support subtrees
+
         self.emit(SIGNAL("layoutAboutToBeChanged()"))
-        item.setData(self._headers[index.column()], value)
+        key = self._headers[index.column()]
+        transaction[key] = value
         self.emit(SIGNAL("layoutChanged()"))
         return True
 
@@ -86,7 +86,7 @@ class DataModel(QAbstractItemModel) :
         self._headers.append(header)
 
     def addItem(self, item):
-        numRows = self.root.numChildren()
+        numRows = len(self._ledger)
         self.beginInsertRows(QModelIndex(), numRows, numRows)
-        self.root.addChild(item)
+        self._ledger.add_transaction(item)
         self.endInsertRows()
