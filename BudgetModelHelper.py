@@ -1,5 +1,4 @@
 from DataModel import DataModel
-from DataModelAdapter import DataModelAdapter
 from Ledger import Ledger
 
 import pickle
@@ -20,12 +19,6 @@ def get_ledger() :
 
     if not result: result = Ledger()
     return result
-
-def get_model() :
-    model = DataModel()
-
-    model.setHeaders(list(model.root.keys()))
-    return model
 
 def save_ledger(ledger) :
     with open(DATA_FILE, 'wb') as outfile:
