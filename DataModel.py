@@ -46,7 +46,10 @@ class DataModel(QAbstractItemModel) :
             return QModelIndex()
 
         # TODO: support subtrees
-        return self.createIndex(row, column, QModelIndex())
+        transaction = self._ledger[row]
+        key = self._headers[column]
+        data = transaction[key] if key in transaction else None
+        return self.createIndex(row, column, data)
 
     def parent(self, index) :
         if not index.isValid() :
