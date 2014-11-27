@@ -1,14 +1,15 @@
 from Transaction import Transaction
-from DataModelAdapter import DataModelAdapter
+from DataModel import DataModel
 
 from PySide.QtGui import *
 from PySide.QtCore import *
 
 class BudgetTreeView(QTreeView) :
-    def __init__(self, model) :
+    def __init__(self, ledger) :
         super(BudgetTreeView, self).__init__()
 
-        self.setModel(model)
+        self.setModel(DataModel(ledger))
+        self.model().setHeaders(list(ledger.keys()))
         self.initUI()
 
     def initUI(self) :
@@ -23,5 +24,4 @@ class BudgetTreeView(QTreeView) :
 
     @Slot()
     def addTransaction(self) :
-        new_data_model = DataModelAdapter(Transaction())
-        self.model().addItem(new_data_model)
+        self.model().addItem(Transaction())
