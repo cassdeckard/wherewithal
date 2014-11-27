@@ -24,13 +24,8 @@ class DataModel(QAbstractItemModel) :
         if not index.isValid() :
             return None
 
-        transaction = self._ledger[index.row()]
-        # TODO: support subtrees
-
         if role == Qt.DisplayRole or role == Qt.EditRole :
-            key = self._headers[index.column()]
-            data = transaction[key] if key in transaction else None
-            return str(data)
+            return str(index.internalPointer())
 
         return None
 
