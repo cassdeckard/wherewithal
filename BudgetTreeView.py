@@ -9,7 +9,6 @@ class BudgetTreeView(QTreeView) :
         super(BudgetTreeView, self).__init__()
 
         self.setModel(DataModel(ledger))
-        self.model().setHeaders(list(ledger.keys()))
         self.initUI()
 
     def initUI(self) :

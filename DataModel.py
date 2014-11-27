@@ -7,7 +7,7 @@ class DataModel(QAbstractItemModel) :
     def __init__(self, ledger, parent=None) :
         super(DataModel, self).__init__(parent)
         self._ledger = ledger
-        self._headers = []
+        self._headers = list(ledger.keys())
 
     # QAbstractItemModel methods
 
